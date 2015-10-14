@@ -374,7 +374,7 @@ public class SelectCricTeam {
 			String playerName = matchTokens[0];
 
 			int runs = 0;
-			int overs = 0;
+			float overs = 0;
 			int econ = 0;
 			int maidns = 0;
 			int wkts = 0;
@@ -395,7 +395,7 @@ public class SelectCricTeam {
 						runs += Integer.parseInt(tokens[1]);
 					}
 					if (!tokens[0].equals("-")){
-						overs += Integer.parseInt(tokens[0]);
+						overs += Float.parseFloat(tokens[0]);
 					}
 
 					if (!tokens[1].equals("-") ){
