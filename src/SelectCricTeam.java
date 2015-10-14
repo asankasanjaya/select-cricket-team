@@ -230,7 +230,7 @@ public class SelectCricTeam {
 
 					int sixes =0;
 					if (!tokens[13].equals("-")) {
-						sixes= Integer.parseInt(tokens[13]);
+						sixes= Integer.parseInt(tokens[18]);
 					}
 
 					String playerName = tokens[0];
@@ -238,7 +238,7 @@ public class SelectCricTeam {
 							* 3 + hundreds * 4 + fifties * 2 + sixes * 0.75f
 							+ fours * 0.25f;
 
-					System.out.println("VsOppositionBatStatsScoreMapper output vals:");
+					System.out.println("in country output vals:");
 					System.out.println("BAT:" + playerName + ","
 							+ weightedScore);
 					// ToRecordMap.put(playerName, new Float(weightedScore));
