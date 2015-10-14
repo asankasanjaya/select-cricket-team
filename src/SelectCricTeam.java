@@ -349,16 +349,16 @@ public class SelectCricTeam {
 		job.setMapOutputKeyClass(Text.class);
 		job.setMapOutputValueClass(FloatWritable.class);
 
-		MultipleInputs.addInputPath(job, new Path(args[1]),
+		MultipleInputs.addInputPath(job, new Path(args[0]),
 				TextInputFormat.class, GeneralBatStatsScoreMapper.class);
-		MultipleInputs.addInputPath(job, new Path(args[2]),
+		MultipleInputs.addInputPath(job, new Path(args[1]),
 				TextInputFormat.class, VsOppositionBatStatsScoreMapper.class);
-		MultipleInputs.addInputPath(job, new Path(args[3]),
+		MultipleInputs.addInputPath(job, new Path(args[2]),
 				TextInputFormat.class, GeneralBowlStatsScoreMapper.class);
-		MultipleInputs.addInputPath(job, new Path(args[4]),
+		MultipleInputs.addInputPath(job, new Path(args[3]),
 				TextInputFormat.class, InCountryBatStatsScoreMapper.class);
 
-		FileOutputFormat.setOutputPath(job, new Path(args[0]));
+		FileOutputFormat.setOutputPath(job, new Path(args[4]));
 		System.exit(job.waitForCompletion(false) ? 0 : 1);
 
 	}
