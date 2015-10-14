@@ -355,8 +355,8 @@ public class SelectCricTeam {
 				TextInputFormat.class, VsOppositionBatStatsScoreMapper.class);
 		MultipleInputs.addInputPath(job, new Path(args[2]),
 				TextInputFormat.class, GeneralBowlStatsScoreMapper.class);
-		MultipleInputs.addInputPath(job, new Path(args[3]),
-				TextInputFormat.class, InCountryBatStatsScoreMapper.class);
+		//MultipleInputs.addInputPath(job, new Path(args[3]),
+		//		TextInputFormat.class, InCountryBatStatsScoreMapper.class);
 
 		FileOutputFormat.setOutputPath(job, new Path(args[4]));
 		System.exit(job.waitForCompletion(false) ? 0 : 1);
