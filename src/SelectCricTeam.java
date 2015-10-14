@@ -190,7 +190,7 @@ public class SelectCricTeam {
 			if (line.length() > 0) {
 
 				String[] tokens = line.split(",");
-				if (tokens.length > 1) {
+				if (tokens.length > 2) {
 
 					float average = 0;
 					if (!tokens[6].equals("-")) {
@@ -355,8 +355,8 @@ public class SelectCricTeam {
 				TextInputFormat.class, VsOppositionBatStatsScoreMapper.class);
 		MultipleInputs.addInputPath(job, new Path(args[2]),
 				TextInputFormat.class, GeneralBowlStatsScoreMapper.class);
-		//MultipleInputs.addInputPath(job, new Path(args[3]),
-		//		TextInputFormat.class, InCountryBatStatsScoreMapper.class);
+		MultipleInputs.addInputPath(job, new Path(args[3]),
+				TextInputFormat.class, InCountryBatStatsScoreMapper.class);
 
 		FileOutputFormat.setOutputPath(job, new Path(args[4]));
 		System.exit(job.waitForCompletion(false) ? 0 : 1);
