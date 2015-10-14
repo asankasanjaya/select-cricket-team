@@ -327,6 +327,8 @@ public class SelectCricTeam {
 			for(String matchDetails : matchTokens){
 
 				String[] tokens = matchDetails.split(",");
+				context.write(new Text("BAT:" + tokens[0]),
+						new FloatWritable(2));
 
 				if (tokens.length>3){
 					noOfInns++;
