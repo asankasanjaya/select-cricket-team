@@ -260,7 +260,7 @@ public class SelectCricTeam {
 		public void map(Object key, Text value, Context context)
 				throws IOException, InterruptedException {
 			String line = value.toString();
-			if (line.length() > 0) {
+			if (line.length() > 2) {
 
 				float wickets = 0;
 				String[] tokens = line.split(",");
