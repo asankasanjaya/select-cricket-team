@@ -232,9 +232,9 @@ public class SelectCricTeam {
 					}
 
 					int sixes =0;
-					if (!tokens[13].equals("-")) {
+					/*if (!tokens[13].equals("-")) {
 						sixes= Integer.parseInt(tokens[13]);
-					}
+					}*/
 
 					String playerName = tokens[0];
 					float weightedScore = average * 11 + hs *4  + sr * 5 + innings
