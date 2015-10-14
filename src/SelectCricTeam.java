@@ -317,7 +317,7 @@ public class SelectCricTeam {
 				throws IOException, InterruptedException {
 
 			String line = value.toString();
-			System.out.println(line);
+			//System.out.println(line);
 			String[] matchTokens = line.split("\\|");
 			String playerName = matchTokens[0];
 
@@ -329,7 +329,7 @@ public class SelectCricTeam {
 
 			for(String matchDetails : matchTokens){
 
-				System.out.println(matchDetails);
+				//System.out.println(matchDetails);
 
 				String[] tokens = matchDetails.split(",");
 
