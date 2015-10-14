@@ -336,14 +336,14 @@ public class SelectCricTeam {
 
 				if (tokens.length>3){
 					noOfInns++;
-					if (!tokens[1].equals("-") && !tokens[1].matches("([A-Z])\\w+/ig")){
+					if (!tokens[1].equals("-") && !tokens[1].equals("DNB")){
 						runs += Integer.parseInt(tokens[1]);
 						if(hs < Integer.parseInt(tokens[1])){
 							hs =  Integer.parseInt(tokens[1]);
 						}
 					}
 
-					if (!tokens[2].equals("-") && !tokens[1].matches("([A-Z])\\w+/ig")){
+					if (!tokens[2].equals("-") && !tokens[1].equals("DNB")){
 						bowlFaced += Integer.parseInt(tokens[2]);
 					}
 
