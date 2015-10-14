@@ -11,6 +11,7 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
+import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.MultipleInputs;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
@@ -359,6 +360,8 @@ public class SelectCricTeam {
 				TextInputFormat.class, InCountryBatStatsScoreMapper.class);*/
 
 		job.setMapperClass(InCountryBatStatsScoreMapper.class);
+		FileInputFormat.addInputPath(job, new Path(args[3]));
+
 
 		FileOutputFormat.setOutputPath(job, new Path(args[4]));
 		System.exit(job.waitForCompletion(false) ? 0 : 1);
