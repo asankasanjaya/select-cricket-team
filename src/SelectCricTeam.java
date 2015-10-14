@@ -3,6 +3,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.TreeMap;
+import java.util.logging.Logger;
+
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.FloatWritable;
@@ -311,11 +313,13 @@ public class SelectCricTeam {
 	public static class RecentBattingStatsScoreMapper extends
 			Mapper<Object, Text, Text, FloatWritable> {
 
+		Logger log = Logger.getAnonymousLogger();
+
 		public void map(Object key, Text value, Context context)
 				throws IOException, InterruptedException {
 
-
 			String line = value.toString();
+			log.info(line);
 			String[] matchTokens = line.split("|");
 			String playerName = matchTokens[0];
 
@@ -324,10 +328,9 @@ public class SelectCricTeam {
 			int hs = 0;
 			int noOfInns = 0;
 
-			context.write(new Text("BAT:" + matchTokens[0] + " "  + matchTokens[1]),
-					new FloatWritable(2));
 
 			for(String matchDetails : matchTokens){
+
 
 				String[] tokens = matchDetails.split(",");
 
