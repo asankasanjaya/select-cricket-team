@@ -313,6 +313,8 @@ public class SelectCricTeam {
 
 		public void map(Object key, Text value, Context context)
 				throws IOException, InterruptedException {
+
+
 			String line = value.toString();
 			String[] matchTokens = line.split("|");
 			String playerName = matchTokens[0];
@@ -326,7 +328,7 @@ public class SelectCricTeam {
 
 				String[] tokens = matchDetails.split(",");
 
-				if (tokens.length>4){
+				if (tokens.length>3){
 					noOfInns++;
 					if (!tokens[1].equals("-")){
 						runs += Integer.parseInt(tokens[1]);
