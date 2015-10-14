@@ -330,7 +330,7 @@ public class SelectCricTeam {
 					noOfInns++;
 					if (!tokens[1].equals("-")){
 						runs += Integer.parseInt(tokens[1]);
-						if(hs< Integer.parseInt(tokens[1])){
+						if(hs < Integer.parseInt(tokens[1])){
 							hs =  Integer.parseInt(tokens[1]);
 						}
 					}
@@ -343,10 +343,12 @@ public class SelectCricTeam {
 
 			}
 
-			float averageStrikerate = (runs/bowlFaced)*100;
-			float weightedScore = averageStrikerate*7 + (runs/noOfInns)*15 + hs*8;
-			context.write(new Text("BAT:" + playerName),
-					new FloatWritable(weightedScore));
+			if(bowlFaced != 0 && noOfInns !=0) {
+				float averageStrikerate = (runs / bowlFaced) * 100;
+				float weightedScore = averageStrikerate * 7 + (runs / noOfInns) * 15 + hs * 8;
+				context.write(new Text("BAT:" + playerName),
+						new FloatWritable(weightedScore));
+			}
 
 		}
 	}
