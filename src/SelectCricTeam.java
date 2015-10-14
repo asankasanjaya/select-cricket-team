@@ -180,6 +180,76 @@ public class SelectCricTeam {
 		}
 	}
 
+
+	public static class InCountryBatStatsScoreMapper extends
+			Mapper<Object, Text, Text, FloatWritable> {
+
+		public void map(Object key, Text value, Context context)
+				throws IOException, InterruptedException {
+			String line = value.toString();
+			if (line.length() > 0) {
+
+				String[] tokens = line.split(",");
+				if (tokens.length > 1) {
+
+					float average = 0;
+					if (!tokens[6].equals("-")) {
+						average = Float.parseFloat(tokens[6]);
+					}
+					String hsString = tokens[5];
+					float hs = 0;
+					if (hsString.endsWith("*")) {
+						hs = Float.parseFloat(hsString.substring(0,hsString.length() - 1));
+						System.out.println("highest score taken:"+hs+"\n");
+					}
+
+					float sr =0;
+					if (!tokens[8].equals("-")) {
+						sr= Float.parseFloat(tokens[8]);
+					}
+
+					int innings =0;
+					if (!tokens[2].equals("-")) {
+						innings= Integer.parseInt(tokens[2]);
+					}
+
+					int hundreds=0;
+					if (!tokens[9].equals("-")) {
+						hundreds= Integer.parseInt(tokens[9]);
+					}
+
+					int fifties =0;
+					if (!tokens[10].equals("-")) {
+						fifties= Integer.parseInt(tokens[10]);
+					}
+
+					int fours=0;
+					if (!tokens[12].equals("-")) {
+						fours= Integer.parseInt(tokens[12]);
+					}
+
+					int sixes =0;
+					if (!tokens[13].equals("-")) {
+						sixes= Integer.parseInt(tokens[13]);
+					}
+
+					String playerName = tokens[0];
+					float weightedScore = average * 11 + hs *4  + sr * 5 + innings
+							* 3 + hundreds * 4 + fifties * 2 + sixes * 0.75f
+							+ fours * 0.25f;
+
+					System.out.println("VsOppositionBatStatsScoreMapper output vals:");
+					System.out.println("BAT:" + playerName + ","
+							+ weightedScore);
+					// ToRecordMap.put(playerName, new Float(weightedScore));
+					context.write(new Text("BAT:" + playerName),
+							new FloatWritable(weightedScore));
+				}
+			}
+		}
+	}
+
+
 	// common reducer for all the mapper types
 	public static class CommmonReducer extends
 			Reducer<Text, FloatWritable, NullWritable, Text> {
@@ -285,6 +355,8 @@ public class SelectCricTeam {
 				TextInputFormat.class, VsOppositionBatStatsScoreMapper.class);
 		MultipleInputs.addInputPath(job, new Path(args[3]),
 				TextInputFormat.class, GeneralBowlStatsScoreMapper.class);
+		MultipleInputs.addInputPath(job, new Path(args[4]),
+				TextInputFormat.class, InCountryBatStatsScoreMapper.class);
 
 		FileOutputFormat.setOutputPath(job, new Path(args[0]));
 		System.exit(job.waitForCompletion(false) ? 0 : 1);
