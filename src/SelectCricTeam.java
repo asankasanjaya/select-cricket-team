@@ -308,6 +308,48 @@ public class SelectCricTeam {
 		}
 	}
 
+	public static class RecentBattingStatsScoreMapper extends
+			Mapper<Object, Text, Text, FloatWritable> {
+
+		public void map(Object key, Text value, Context context)
+				throws IOException, InterruptedException {
+			String line = value.toString();
+			String[] matchTokens = line.split("|");
+			String playerName = matchTokens[0];
+
+			int runs = 0;
+			int bowlFaced = 0;
+			int hs = 0;
+			int noOfInns = 0;
+
+			for(String matchDetails : matchTokens){
+
+				String[] tokens = matchDetails.split(",");
+
+				if (tokens.length>4){
+					noOfInns++;
+					if (!tokens[1].equals("-")){
+						runs += Integer.parseInt(tokens[1]);
+						if(hs< Integer.parseInt(tokens[1])){
+							hs =  Integer.parseInt(tokens[1]);
+						}
+					}
+
+					if (!tokens[2].equals("-")){
+						bowlFaced += Integer.parseInt(tokens[2]);
+					}
+
+				}
+
+			}
+
+			float averageStrikerate = (runs/bowlFaced)*100;
+			float weightedScore = averageStrikerate*7 + (runs/noOfInns)*15 + hs*8;
+			context.write(new Text("BAT:" + playerName),
+					new FloatWritable(weightedScore));
+
+		}
+	}
 
 	// common reducer for all the mapper types
 	public static class CommmonReducer extends
@@ -427,7 +469,7 @@ public class SelectCricTeam {
 		Configuration conf = new Configuration();
 		Job job = Job.getInstance(conf, "word count");
 		job.setJarByClass(SelectCricTeam.class);
-		job.setMapperClass(InCountryBowlingStatsScoreMapper.class);
+		job.setMapperClass(RecentBattingStatsScoreMapper.class);
 		//job.setCombinerClass(IntSumReducer.class);
 		job.setOutputKeyClass(NullWritable.class);
 		job.setOutputValueClass(Text.class);
