@@ -274,17 +274,17 @@ public class SelectCricTeam {
 
 				float avg=50;
 				if (!tokens[8].equals("-")) {
-					avg = Float.parseFloat(tokens[9]);
+					avg = Float.parseFloat(tokens[8]);
 				}
 
 				float econ=6;
 				if (!tokens[9].equals("-")) {
-					econ = Float.parseFloat(tokens[10]);
+					econ = Float.parseFloat(tokens[9]);
 				}
 
 				int fourWkts=0;
 				if (!tokens[11].equals("-")) {
-					fourWkts = Integer.parseInt(tokens[12]);
+					fourWkts = Integer.parseInt(tokens[11]);
 				}
 
 				int fiveWkts=0;
@@ -294,7 +294,7 @@ public class SelectCricTeam {
 
 				int innings=0;
 				if (!tokens[2].equals("-")) {
-					innings = Integer.parseInt(tokens[3]);
+					innings = Integer.parseInt(tokens[2]);
 				}
 
 				String playerName = tokens[0];
