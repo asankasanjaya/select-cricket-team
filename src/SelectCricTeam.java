@@ -343,7 +343,7 @@ public class SelectCricTeam {
 						}
 					}
 
-					if (!tokens[2].equals("-") && !tokens[1].equals("DNB")){
+					if (!tokens[2].equals("-") && !tokens[2].equals("DNB")){
 						bowlFaced += Integer.parseInt(tokens[2]);
 					}
 
@@ -360,6 +360,74 @@ public class SelectCricTeam {
 
 		}
 	}
+
+
+	public static class RecentBowlingStatsScoreMapper extends
+			Mapper<Object, Text, Text, FloatWritable> {
+
+		public void map(Object key, Text value, Context context)
+				throws IOException, InterruptedException {
+
+			String line = value.toString();
+			//System.out.println(line);
+			String[] matchTokens = line.split("\\|");
+			String playerName = matchTokens[0];
+
+			int runs = 0;
+			int overs = 0;
+			int econ = 0;
+			int maidns = 0;
+			int wkts = 0;
+			int noOfInns = 0;
+
+
+
+			for(String matchDetails : matchTokens){
+
+				//System.out.println(matchDetails);
+
+				String[] tokens = matchDetails.split(",");
+
+
+				if (tokens.length>3){
+					noOfInns++;
+					if (!tokens[2].equals("-")){
+						runs += Integer.parseInt(tokens[1]);
+					}
+					if (!tokens[0].equals("-")){
+						overs += Integer.parseInt(tokens[0]);
+					}
+
+					if (!tokens[1].equals("-") ){
+						maidns += Integer.parseInt(tokens[2]);
+					}
+					if (!tokens[3].equals("-") ){
+						wkts += Integer.parseInt(tokens[3]);
+					}
+
+
+				}
+
+			}
+
+			if(overs != 0 && noOfInns !=0) {
+				float avgWkts;
+				float avgEcon = runs/overs;
+				float avgMaidns = maidns/overs;
+				float sr = (runs/overs*6)*100;
+				if (wkts!=0) {
+					 avgWkts =  wkts/overs;
+				}
+				else  avgWkts = 100;
+
+				float weightedScore = avgWkts * 40 - avgEcon * 20 +  avgMaidns* 100 - sr*3;
+				context.write(new Text("BAT:" + playerName),
+						new FloatWritable(weightedScore));
+			}
+
+		}
+	}
+
 
 	// common reducer for all the mapper types
 	public static class CommmonReducer extends
@@ -479,7 +547,7 @@ public class SelectCricTeam {
 		Configuration conf = new Configuration();
 		Job job = Job.getInstance(conf, "word count");
 		job.setJarByClass(SelectCricTeam.class);
-		job.setMapperClass(RecentBattingStatsScoreMapper.class);
+		job.setMapperClass(RecentBowlingStatsScoreMapper.class);
 		//job.setCombinerClass(IntSumReducer.class);
 		job.setOutputKeyClass(NullWritable.class);
 		job.setOutputValueClass(Text.class);
