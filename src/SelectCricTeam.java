@@ -262,7 +262,7 @@ public class SelectCricTeam {
 				String line = value.toString();
 				float wickets = 0;
 				String[] tokens = line.split(",");
-			if (tokens.length > 2) {
+			if (tokens.length > 12) {
 				if (!tokens[6].equals("-")) {
 					wickets = Float.parseFloat(tokens[6]);
 				}
@@ -273,27 +273,27 @@ public class SelectCricTeam {
 				}
 
 				float avg=50;
-				if (!tokens[9].equals("-")) {
+				if (!tokens[8].equals("-")) {
 					avg = Float.parseFloat(tokens[9]);
 				}
 
 				float econ=6;
-				if (!tokens[10].equals("-")) {
+				if (!tokens[9].equals("-")) {
 					econ = Float.parseFloat(tokens[10]);
 				}
 
 				int fourWkts=0;
-				if (!tokens[12].equals("-")) {
+				if (!tokens[11].equals("-")) {
 					fourWkts = Integer.parseInt(tokens[12]);
 				}
 
 				int fiveWkts=0;
-				if (!tokens[13].equals("-")) {
+				if (!tokens[12].equals("-")) {
 					fiveWkts = Integer.parseInt(tokens[13]);
 				}
 
 				int innings=0;
-				if (!tokens[3].equals("-")) {
+				if (!tokens[2].equals("-")) {
 					innings = Integer.parseInt(tokens[3]);
 				}
 
