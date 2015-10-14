@@ -329,7 +329,7 @@ public class SelectCricTeam {
 
 			for(String matchDetails : matchTokens){
 
-				System.out.printf(matchDetails);
+				System.out.println(matchDetails);
 
 				String[] tokens = matchDetails.split(",");
 
