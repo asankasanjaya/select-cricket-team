@@ -289,7 +289,7 @@ public class SelectCricTeam {
 
 				int fiveWkts=0;
 				if (!tokens[12].equals("-")) {
-					fiveWkts = Integer.parseInt(tokens[13]);
+					fiveWkts = Integer.parseInt(tokens[12]);
 				}
 
 				int innings=0;
