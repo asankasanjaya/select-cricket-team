@@ -318,7 +318,7 @@ public class SelectCricTeam {
 
 			String line = value.toString();
 			System.out.println(line);
-			String[] matchTokens = line.split("|");
+			String[] matchTokens = line.split("\\|");
 			String playerName = matchTokens[0];
 
 			int runs = 0;
