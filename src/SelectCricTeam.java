@@ -254,6 +254,61 @@ public class SelectCricTeam {
 		}
 	}
 
+	public static class InCountryBowlingStatsScoreMapper extends
+			Mapper<Object, Text, Text, FloatWritable> {
+
+		public void map(Object key, Text value, Context context)
+				throws IOException, InterruptedException {
+			String line = value.toString();
+			if (line.length() > 0) {
+
+				float wickets = 0;
+				String[] tokens = line.split(",");
+				if (!tokens[6].equals("-")) {
+					wickets = Float.parseFloat(tokens[6]);
+				}
+
+				float sr = 50;
+				if (!tokens[11].equals("-")) {
+					sr = Float.parseFloat(tokens[11]);
+				}
+
+				float avg=50;
+				if (!tokens[9].equals("-")) {
+					avg = Float.parseFloat(tokens[9]);
+				}
+
+				float econ=6;
+				if (!tokens[10].equals("-")) {
+					econ = Float.parseFloat(tokens[10]);
+				}
+
+				int fourWkts=0;
+				if (!tokens[12].equals("-")) {
+					fourWkts = Integer.parseInt(tokens[12]);
+				}
+
+				int fiveWkts=0;
+				if (!tokens[13].equals("-")) {
+					fiveWkts = Integer.parseInt(tokens[13]);
+				}
+
+				int innings=0;
+				if (!tokens[3].equals("-")) {
+					innings = Integer.parseInt(tokens[3]);
+				}
+
+				String playerName = tokens[0];
+				float weightedScore = wickets * 5 - econ*20 -avg*3- sr*3+fiveWkts*10+fourWkts ; //not finished writing yet
+				System.out.println("GeneralBowlStatsScoreMapper output vals:");
+				System.out.println("BOWL:" + playerName + "," + weightedScore);
+				// ToRecordMap.put(playerName, new Float(weightedScore));
+				context.write(new Text("BOWL:" + playerName),
+						new FloatWritable(weightedScore));
+			}
+		}
+	}
+
 
 	// common reducer for all the mapper types
 	public static class CommmonReducer extends
@@ -373,7 +428,7 @@ public class SelectCricTeam {
 		Configuration conf = new Configuration();
 		Job job = Job.getInstance(conf, "word count");
 		job.setJarByClass(SelectCricTeam.class);
-		job.setMapperClass(InCountryBatStatsScoreMapper.class);
+		job.setMapperClass(InCountryBowlingStatsScoreMapper.class);
 		//job.setCombinerClass(IntSumReducer.class);
 		job.setOutputKeyClass(NullWritable.class);
 		job.setOutputValueClass(Text.class);
