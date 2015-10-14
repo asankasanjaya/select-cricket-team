@@ -6,6 +6,7 @@ import java.util.TreeMap;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.FloatWritable;
+import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
@@ -341,7 +342,7 @@ public class SelectCricTeam {
 	}
 
 	public static void main(String[] args) throws Exception {
-		Configuration conf = new Configuration();
+		/*Configuration conf = new Configuration();
 		Job job = Job.getInstance(conf, "number sum");
 		job.setJarByClass(SelectCricTeam.class);
 		job.setReducerClass(CommmonReducer.class);
@@ -350,21 +351,34 @@ public class SelectCricTeam {
 		job.setMapOutputKeyClass(Text.class);
 		job.setMapOutputValueClass(FloatWritable.class);
 
-		/*MultipleInputs.addInputPath(job, new Path(args[0]),
+		MultipleInputs.addInputPath(job, new Path(args[0]),
 				TextInputFormat.class, GeneralBatStatsScoreMapper.class);
 		MultipleInputs.addInputPath(job, new Path(args[1]),
 				TextInputFormat.class, VsOppositionBatStatsScoreMapper.class);
 		MultipleInputs.addInputPath(job, new Path(args[2]),
 				TextInputFormat.class, GeneralBowlStatsScoreMapper.class);
 		MultipleInputs.addInputPath(job, new Path(args[3]),
-				TextInputFormat.class, InCountryBatStatsScoreMapper.class);*/
+				TextInputFormat.class, InCountryBatStatsScoreMapper.class);
 
 		job.setMapperClass(InCountryBatStatsScoreMapper.class);
 		FileInputFormat.addInputPath(job, new Path(args[3]));
 
 
 		FileOutputFormat.setOutputPath(job, new Path(args[4]));
-		System.exit(job.waitForCompletion(false) ? 0 : 1);
+		System.exit(job.waitForCompletion(false) ? 0 : 1);*/
+
+		Configuration conf = new Configuration();
+		Job job = Job.getInstance(conf, "word count");
+		job.setJarByClass(SelectCricTeam.class);
+		job.setMapperClass(InCountryBatStatsScoreMapper.class);
+		//job.setCombinerClass(IntSumReducer.class);
+		job.setOutputKeyClass(NullWritable.class);
+		job.setOutputValueClass(Text.class);
+		job.setMapOutputKeyClass(Text.class);
+		job.setMapOutputValueClass(FloatWritable.class);
+		FileInputFormat.addInputPath(job, new Path(args[3]));
+		FileOutputFormat.setOutputPath(job, new Path(args[4]));
+		System.exit(job.waitForCompletion(true) ? 0 : 1);
 
 	}
 }
