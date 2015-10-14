@@ -5,8 +5,6 @@ import java.util.Map.Entry;
 import java.util.TreeMap;
 import java.util.logging.Logger;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.FloatWritable;
@@ -315,13 +313,11 @@ public class SelectCricTeam {
 	public static class RecentBattingStatsScoreMapper extends
 			Mapper<Object, Text, Text, FloatWritable> {
 
-		Log log = LogFactory.getLog(RecentBattingStatsScoreMapper.class);
-
 		public void map(Object key, Text value, Context context)
 				throws IOException, InterruptedException {
 
 			String line = value.toString();
-			log.info(line);
+			System.out.println(line);
 			String[] matchTokens = line.split("|");
 			String playerName = matchTokens[0];
 
